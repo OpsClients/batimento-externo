@@ -1,0 +1,24 @@
+# Quem vigia o vigia: confere se o Worker vigia-nuvem (Cloudflare), que olha a VM omidas-vm-1 de minuto em minuto,
+# continua rodando. Se o cron da Cloudflare parar, o vigia fica mudo e nenhum alarme da VM sai: este workflow, na
+# infraestrutura do GitHub, falha de propósito e o e-mail "Run failed" chega em ia@valeur.com.br.
+# O e-mail de rodada agendada vai para quem mexeu por último nesta linha de cron: commit feito pela conta OpsClients.
+name: vigia da nuvem vivo
+on:
+  schedule:
+    - cron: '7,37 * * * *'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  conferir:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: O vigia da nuvem rodou nos ultimos 5 minutos?
+        run: |
+          for i in 1 2 3; do
+            r=$(curl -s -m 20 -w ' HTTP%{http_code}' https://vigia-nuvem.grupovaleur.workers.dev/saude) && echo "$r" | grep -q '"vigia_rodando":true' && { echo "ok: $r"; exit 0; }
+            sleep 20
+          done
+          echo "::error title=VIGIA DA NUVEM PARADO::O Worker vigia-nuvem nao roda ha mais de 5 min: os alarmes da VM nao estao saindo. Resposta: $r"
+          exit 1
