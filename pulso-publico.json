@@ -1,11 +1,9 @@
 {
-  "gerado_em_utc": "2026-10-29T17:02:00.857Z",
+  "gerado_em_utc": "2026-10-29T18:02:00.782Z",
   "frota": {
     "parada": false,
     "motivos": []
   },
-  "observador_saudavel": false,
-  "problemas_do_observador": [
-    "2 problema(s) num vigia da maquina (detalhe no pulso privado)"
-  ]
+  "observador_saudavel": true,
+  "problemas_do_observador": []
 }
