@@ -1,10 +1,8 @@
 {
-  "gerado_em_utc": "2026-11-07T10:07:16.179Z",
+  "gerado_em_utc": "2026-11-07T11:02:00.805Z",
   "frota": {
-    "parada": true,
-    "motivos": [
-      "a frota do PM2 parou na maquina (detalhe no pulso privado)"
-    ]
+    "parada": false,
+    "motivos": []
   },
   "observador_saudavel": false,
   "problemas_do_observador": [
